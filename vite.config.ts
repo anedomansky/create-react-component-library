@@ -5,18 +5,12 @@ import dts from "vite-plugin-dts";
 import { libInjectCss } from "vite-plugin-lib-inject-css";
 import { globSync } from "glob";
 import { fileURLToPath } from "url";
-// import checker from "vite-plugin-checker";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    dts({ include: ["lib"] }),
-    // vanillaExtractPlugin(),
-    libInjectCss(),
-    // checker({ typescript: true }),
-  ],
+  plugins: [react(), dts({ include: ["lib"] }), libInjectCss()],
   build: {
+    emptyOutDir: true,
     copyPublicDir: false,
     lib: {
       entry: resolve(__dirname, "lib/index.ts"),
