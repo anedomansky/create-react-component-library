@@ -23,7 +23,7 @@ export default defineConfig({
           ignore: ["lib/**/*.d.ts", "lib/**/*.spec.ts"],
         }).map((file) => [
           // This removes `lib/` and the file extension from each file:
-          // e.g. lib/nested/foo.ts becomes nested/foo
+          // e.g. lib/nested/foo.ts becomes nested/foo"preinstall": "npx only-allow pnpm",
           relative("lib", file.slice(0, file.length - extname(file).length)),
           // The absolute path to the entry file
           // e.g. lib/nested/foo.ts becomes /project/lib/nested/foo.ts
