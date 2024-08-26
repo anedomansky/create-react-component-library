@@ -1,0 +1,40 @@
+{
+  "name": "@anedomansky/create-react-component-library",
+  "version": "1.0.0",
+  "description": "A starter for creating your own component libraries with react.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "",
+    "build": "",
+    "prepublish": "pnpm run build"
+  },
+  "keywords": [
+    "react",
+    "vite",
+    "blueprints",
+    "code generation"
+  ],
+  "author": "Alexander Nedomansky <anedomansky@gmail.com>",
+  "license": "MIT",
+  "bin": {
+    "create-react-component-library": "./dist/index.js"
+  },
+  "files": [
+    "index.js",
+    "template",
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anedomansky/create-react-component-library.git"
+  },
+  "homepage": "https://github.com/anedomansky/create-react-component-library/tree/main#readme",
+  "devDependencies": {
+    "typescript": "5.5.4"
+  }
+}
