@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "dev": "",
-    "build": "",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "typecheck": "tsc --noEmit",
     "prepublish": "pnpm run build"
   },
   "keywords": [
@@ -27,7 +28,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=20"
+    "node": "^18.0.0 || >=20.0.0"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
   },
   "homepage": "https://github.com/anedomansky/create-react-component-library/tree/main#readme",
   "devDependencies": {
-    "typescript": "5.5.4"
+    "typescript": "5.5.4",
+    "unbuild": "2.0.0"
   }
 }
