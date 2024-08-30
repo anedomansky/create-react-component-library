@@ -20,7 +20,7 @@
   "author": "Alexander Nedomansky <anedomansky@gmail.com>",
   "license": "MIT",
   "bin": {
-    "create-react-component-library": "./dist/index.js"
+    "create-react-component-library": "./index.js"
   },
   "files": [
     "index.js",
@@ -35,7 +35,15 @@
     "url": "git+https://github.com/anedomansky/create-react-component-library.git"
   },
   "homepage": "https://github.com/anedomansky/create-react-component-library/tree/main#readme",
+  "bugs": {
+    "url": "https://github.com/anedomansky/create-react-component-library/issues"
+  },
   "devDependencies": {
+    "@types/minimist": "1.2.5",
+    "@types/node": "22.5.1",
+    "@types/prompts": "2.4.9",
+    "minimist": "1.2.8",
+    "prompts": "2.4.2",
     "typescript": "5.5.4",
     "unbuild": "2.0.0"
   }
