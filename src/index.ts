@@ -8,6 +8,7 @@ import { getProjectName } from "./utils/get-project-name.fn";
 import { isDirectoryEmpty } from "./utils/is-directory-empty.fn";
 import { isValidPackageName } from "./utils/is-valid-package-name.fn";
 import { createValidPackageName } from "./utils/create-valid-package-name.fn";
+import { writeTemplateFiles } from "./utils/write-template-files.fn";
 
 // Parse the command line arguments
 const argv = minimist<{ help?: boolean }>(process.argv.slice(2), {
@@ -24,8 +25,6 @@ Usage: create-react-component-library [DIRECTORY]
 
 Create a new project that enables you to build a React component library with Vite and TypeScript.
 With no [DIRECTORY] provided, the CLI will start and prompt the user for the [DIRECTORY].`;
-
-function writeTemplateFiles() {}
 
 async function init() {
   const help = argv.help;
@@ -127,8 +126,34 @@ async function init() {
 
   const templateDir = path.resolve(
     fileURLToPath(import.meta.url),
-    "../../template"
+    "../template"
   );
+
+  const files = fs
+    .readdirSync(templateDir)
+    .filter((file) => file !== "package.json");
+
+  for (let i = 0; i < files.length; i++) {
+    writeTemplateFiles(files[i], rootDir, templateDir);
+  }
+
+  const packageJson = JSON.parse(
+    fs.readFileSync(path.join(templateDir, "package.json"), "utf-8")
+  );
+
+  packageJson.name = packageName ?? projectName;
+
+  writeTemplateFiles(
+    "package.json",
+    rootDir,
+    templateDir,
+    JSON.stringify(packageJson, null, 2) + "\n"
+  );
+
+  const directoryName = path.resolve(process.cwd(), rootDir);
+
+  console.info(`\nProject created in "${directoryName}".\n`);
+  console.info(`\nNow run cd "${directoryName}"\n`);
 }
 
 init().catch(console.error);
