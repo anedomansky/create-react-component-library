@@ -10,5 +10,7 @@ export default defineBuildConfig({
       minify: true,
     },
   },
-  alias: {},
+  alias: {
+    prompts: "prompts/dist/index.js",
+  },
 });
