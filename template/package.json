@@ -1,6 +1,6 @@
 {
   "name": "@anedomansky/react-component-library-starter-template",
-  "description": "A starter template for creating a React component library with Vite, TypeScript and CSS modules.",
+  "description": "A React component library created with Vite, TypeScript and CSS modules.",
   "private": false,
   "version": "0.1.0",
   "type": "module",

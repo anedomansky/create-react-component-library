@@ -7,7 +7,7 @@ export function createValidPackageName(packageName: string) {
   return packageName
     .trim()
     .toLowerCase()
-    .replaceAll(/\s+/, "-")
+    .replace(/\s+/g, "-")
     .replace(/^[._]/, "")
-    .replaceAll(/[^a-z\d\-~]+/, "-");
+    .replace(/[^a-z\d\-~]+/g, "-");
 }

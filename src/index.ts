@@ -9,6 +9,7 @@ import { isDirectoryEmpty } from "./utils/is-directory-empty.fn";
 import { isValidPackageName } from "./utils/is-valid-package-name.fn";
 import { createValidPackageName } from "./utils/create-valid-package-name.fn";
 import { writeTemplateFiles } from "./utils/write-template-files.fn";
+import { getPackageManager } from "./utils/get-package-manager.fn";
 
 // Parse the command line arguments
 const argv = minimist<{ help?: boolean }>(process.argv.slice(2), {
@@ -154,6 +155,13 @@ async function init() {
 
   console.info(`\nProject created in "${directoryName}".\n`);
   console.info(`\nNow run cd "${directoryName}"\n`);
+
+  const packageManagerInfo = getPackageManager(
+    process.env.npm_config_user_agent
+  );
+  const packageManager = packageManagerInfo?.name ?? "npm";
+
+  console.info(`\nThen run ${packageManager} install\n`);
 }
 
 init().catch(console.error);
