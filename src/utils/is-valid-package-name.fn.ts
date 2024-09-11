@@ -6,7 +6,7 @@
  * @returns Whether the package name is valid or not
  */
 export function isValidPackageName(packageName: string) {
-  return /^(?:@[a-z\d\-*~][a-z\d\-*._~]*\/)?[a-z\d\-~][a-z\d\-._~]*$/.test(
+  return /^(?:@[a-z\d\-*~][a-z\d\-*._~]*\/)?[a-z\d~][a-z\d\-._~]*$/.test(
     packageName
   );
 }
