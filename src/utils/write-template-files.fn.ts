@@ -18,7 +18,7 @@ export function copyTemplateFiles(src: string, dest: string) {
 
   if (stat.isDirectory()) {
     fs.mkdirSync(dest, { recursive: true });
-    const files = fs.readdirSync(src);
+    const files = fs.readdirSync(src, { encoding: "utf-8" });
 
     for (let i = 0; i < files.length; i++) {
       const srcFile = path.join(src, files[i]);
@@ -46,11 +46,11 @@ export function writeTemplateFiles(
   targetDir: string,
   content?: string
 ) {
-  const targetPath = path.join(rootDir, filesToRename[file] ?? file);
+  const targetPath = path.join(targetDir, filesToRename[file] ?? file);
 
   if (content) {
-    fs.writeFileSync(targetPath, content);
+    fs.writeFileSync(targetPath, content, { encoding: "utf-8" });
   } else {
-    copyTemplateFiles(path.join(targetDir, file), targetPath);
+    copyTemplateFiles(path.join(rootDir, file), targetPath);
   }
 }
