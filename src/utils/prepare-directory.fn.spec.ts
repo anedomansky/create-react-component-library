@@ -18,3 +18,9 @@ test("should do nothing", () => {
   const cleaned = prepareDirectory(directory);
   expect(cleaned).toBe("/path/to/directory");
 });
+
+test("should return null if directory is null", () => {
+  const directory = null;
+  const cleaned = prepareDirectory(directory);
+  expect(cleaned).toBeNull();
+});
