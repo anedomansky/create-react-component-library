@@ -3,6 +3,7 @@ import path from "node:path";
 
 const filesToRename: Record<string, string> = {
   _gitignore: ".gitignore",
+  "_eslintrc.cjs": ".eslintrc.cjs",
 };
 
 /**
