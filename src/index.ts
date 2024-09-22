@@ -38,13 +38,9 @@ async function init() {
   const defaultDirectory = "component-library-project";
 
   const argDirectory = prepareDirectory(argv._[0]);
-  const directory = argDirectory || defaultDirectory;
+  let directory = argDirectory ?? defaultDirectory;
 
-  let result: prompts.Answers<"projectName" | "overwrite" | "packageName"> = {
-    overwrite: "",
-    packageName: "",
-    projectName: "",
-  };
+  let result: prompts.Answers<"projectName" | "overwrite" | "packageName">;
 
   prompts.override({
     overwrite: argv.overwrite,
@@ -58,11 +54,13 @@ async function init() {
           name: "projectName",
           message: "Enter the project name:",
           initial: defaultDirectory,
-          onState: (state) => prepareDirectory(state.value) || defaultDirectory,
+          onState: (state) => {
+            directory = prepareDirectory(state.value) ?? defaultDirectory;
+          },
         },
         {
-          type:
-            !fs.existsSync(directory) || isDirectoryEmpty(directory)
+          type: (_, { projectName }: { projectName: string }) =>
+            !fs.existsSync(projectName) || isDirectoryEmpty(projectName)
               ? null
               : "select",
           name: "overwrite",
@@ -111,23 +109,28 @@ async function init() {
     );
   } catch (cancelledError) {
     console.warn((cancelledError as Error).message);
+    return;
   }
 
   const { projectName, overwrite, packageName } = result;
 
-  const rootDir = path.join(process.cwd(), directory);
+  const projectRootDirectory = path.join(process.cwd(), directory);
 
   if (overwrite === "yes") {
-    fs.rmSync(rootDir, { recursive: true, force: true });
-  } else if (!fs.existsSync(rootDir)) {
-    fs.mkdirSync(rootDir, { recursive: true });
+    fs.rmSync(projectRootDirectory, { recursive: true, force: true });
+    fs.mkdirSync(projectRootDirectory, { recursive: true });
+  } else if (!fs.existsSync(projectRootDirectory)) {
+    fs.mkdirSync(projectRootDirectory, { recursive: true });
   }
 
-  console.info(`Creating new React component library project in ${rootDir}...`);
+  console.info(
+    `Creating new React component library project in ${projectRootDirectory}...`
+  );
 
   const templateDir = path.resolve(
     fileURLToPath(import.meta.url),
-    "../template"
+    "../..",
+    "template"
   );
 
   const files = fs
@@ -135,7 +138,7 @@ async function init() {
     .filter((file) => file !== "package.json");
 
   for (let i = 0; i < files.length; i++) {
-    writeTemplateFiles(files[i], rootDir, templateDir);
+    writeTemplateFiles(files[i], templateDir, projectRootDirectory);
   }
 
   const packageJson = JSON.parse(
@@ -146,15 +149,15 @@ async function init() {
 
   writeTemplateFiles(
     "package.json",
-    rootDir,
     templateDir,
+    projectRootDirectory,
     JSON.stringify(packageJson, null, 2) + "\n"
   );
 
-  const directoryName = path.resolve(process.cwd(), rootDir);
+  const directoryName = path.resolve(process.cwd(), projectRootDirectory);
 
-  console.info(`\nProject created in "${directoryName}".\n`);
-  console.info(`\nNow run cd "${directoryName}"\n`);
+  console.info(`\nProject created in "${directoryName}".`);
+  console.info(`\nNow run cd "${directoryName}"`);
 
   const packageManagerInfo = getPackageManager(
     process.env.npm_config_user_agent
