@@ -52,7 +52,7 @@ async function init() {
         {
           type: argDirectory ? null : "text",
           name: "projectName",
-          message: "Enter the project name:",
+          message: "Enter the project name (folder):",
           initial: defaultDirectory,
           onState: (state) => {
             directory = prepareDirectory(state.value) ?? defaultDirectory;
@@ -93,11 +93,12 @@ async function init() {
           name: "overwriteResult",
         },
         {
-          type: () =>
-            isValidPackageName(getProjectName(directory)) ? null : "text",
+          type: "text",
           name: "packageName",
-          message: "Enter the package name:",
-          initial: createValidPackageName(getProjectName(directory)),
+          message: "Enter the package name (package.json name):",
+          initial: `@namespace/${createValidPackageName(
+            getProjectName(directory)
+          )}`,
           validate: (dir) => isValidPackageName(dir) || "Invalid package name",
         },
       ],
