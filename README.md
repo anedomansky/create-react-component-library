@@ -12,19 +12,13 @@ This is a starter for creating your own component library with React and Vite.
 With NPM:
 
 ```bash
-$ npm init @anedomansky/create-react-component-library
-```
-
-With Yarn:
-
-```bash
-$ yarn init @anedomansky/create-react-component-library
+$ npx @anedomansky/create-react-component-library
 ```
 
 With PNPM:
 
 ```bash
-$ pnpm init @anedomansky/create-react-component-library
+$ pnpm create @anedomansky/create-react-component-library
 ```
 
 After that just answer the upcoming interactive prompts and you're good to go!
